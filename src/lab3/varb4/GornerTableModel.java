@@ -7,7 +7,10 @@ package lab3.varb4;
         private Double from;
         private Double to;
         private Double step;
-        private double result[] = new double[3];
+        private double result[] = new double[1];
+        private Boolean resultb;
+        private int xc;
+        private int resultc;
         public GornerTableModel(Double from, Double to, Double step,
 
                                 Double[] coefficients) {
@@ -28,7 +31,7 @@ package lab3.varb4;
         }
         public int getColumnCount() {
 // В данной модели два столбца
-            return 2;
+            return 3;
         }
         public int getRowCount() {
 // Вычислить количество точек между началом и концом отрезка
@@ -47,30 +50,53 @@ package lab3.varb4;
                     result[0] += Math.pow(x, coefficients.length-1-i)*coefficients[i];
                 }
                 return result[0];
-            } else if (col==2){
-                result[1] = 0.0;
-                int p = coefficients.length-1;
+            } else {
+                result[0] = 0.0;
                 for(int i = 0; i < coefficients.length; i++){
-                    result[1] += Math.pow(x, coefficients.length-1-i)*coefficients[p--];
+                    result[0] += Math.pow(x, coefficients.length-1-i)*coefficients[i];
                 }
-                return result[1];
-            } else{
-                return result[2] = result[1] - result[0];
+                xc = (int)Math.floor(x);
+                xc = Math.abs(xc);
+                resultc = (int)Math.floor(result[0]);
+                resultc = Math.abs(resultc);
+                if (xc == 1 || resultc == 1 || xc == 0 || resultc == 0)
+                    return resultb = true;
+                else{
+                    int c;
+                    while (xc > 0) {
+                        c = resultc % xc;
+                        resultc = xc;
+                        xc = c;
+                    }
+                    if (resultc == 1) resultb = true;
+                    else resultb = false;
+                    return resultb;
+                }
+
             }
         }
+
         public String getColumnName(int col) {
             switch (col) {
                 case 0:
 // Название 1-го столбца
                     return "Значение X";
-                default:
+                case 1:
 // Название 2-го столбца
                     return "Значение многочлена";
+                default:
+                    return "Взаимно простые?";
             }
         }
         public Class<?> getColumnClass(int col) {
-// И в 1-ом и во 2-ом столбце находятся значения типа Double
-            return Double.class;
+            switch (col) {
+                case 0:
+                    return Double.class;
+                case 1:
+                    return Double.class;
+                default:
+                    return Boolean.class;
+            }
         }
     }
 
