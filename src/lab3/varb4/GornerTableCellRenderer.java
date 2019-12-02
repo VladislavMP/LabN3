@@ -17,9 +17,7 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 // (иголкой). Применяется аналогия поиска иголки в стоге сена, в роли
 // стога сена - таблица
     private String needle = null;
-    private DecimalFormat formatter =
-
-            (DecimalFormat)NumberFormat.getInstance();
+    private DecimalFormat formatter = (DecimalFormat)NumberFormat.getInstance();
 
     public GornerTableCellRenderer() {
 // Показывать только 5 знаков после запятой
