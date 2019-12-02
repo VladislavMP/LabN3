@@ -1,5 +1,7 @@
 package lab3.varb4;
 
+import javafx.geometry.HPos;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -10,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+import java.lang.String;
 public class GornerTableCellRenderer implements TableCellRenderer {
     private JPanel panel = new JPanel();
     private JLabel label = new JLabel();
@@ -46,6 +49,9 @@ public class GornerTableCellRenderer implements TableCellRenderer {
                                                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 // Преобразовать double в строку с помощью форматировщика
         String formattedDouble = formatter.format(value);
+        int pos = formattedDouble.indexOf(".");
+        String formattedDoubleDr = formattedDouble.substring(pos+1, formattedDouble.length());
+
 // Установить текст надписи равным строковому представлению числа
         label.setText(formattedDouble);
         if (col==1 && needle!=null && needle.equals(formattedDouble)) {
@@ -54,7 +60,9 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 // значение иголки совпадает со значением ячейки таблицы -
 // окрасить задний фон панели в красный цвет
             panel.setBackground(Color.RED);
-        } else {
+        } if (col==1 && formattedDoubleDr.length() < 4) {
+            panel.setBackground(Color.GREEN);
+        }else {
 // Иначе - в обычный белый
             panel.setBackground(Color.WHITE);
         }
